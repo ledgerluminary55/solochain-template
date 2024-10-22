@@ -93,6 +93,9 @@ pub mod pallet {
 	#[pallet::storage]
 	pub type Something<T> = StorageValue<_, u32>;
 
+    #[pallet::storage]
+    pub type Dummy<T> = StorageValue<_, u32>;
+
 	/// Events that functions in this pallet can emit.
 	///
 	/// Events are a simple means of indicating to the outside world (such as dApps, chain explorers
@@ -113,6 +116,7 @@ pub mod pallet {
 			/// The account who set the new value.
 			who: T::AccountId,
 		},
+        Dummy
 	}
 
 	/// Errors that can be returned by this pallet.
@@ -197,6 +201,14 @@ pub mod pallet {
 					Ok(())
 				},
 			}
+		}
+
+        #[pallet::call_index(2)]
+		#[pallet::weight(T::WeightInfo::do_something())]
+		pub fn dummy_call(_origin: OriginFor<T>) -> DispatchResult {
+            Self::deposit_event(Event::Dummy);
+			// Dummy::<T>::put(1u32);
+			Ok(())
 		}
 	}
 }

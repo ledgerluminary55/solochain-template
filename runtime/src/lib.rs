@@ -3,6 +3,9 @@
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
+#[cfg(test)]
+mod integration_testing;
+
 extern crate alloc;
 use alloc::{vec, vec::Vec};
 use pallet_grandpa::AuthorityId as GrandpaId;
