@@ -49,7 +49,10 @@ pub use sp_runtime::BuildStorage;
 pub use sp_runtime::{Perbill, Permill};
 
 /// Import the template pallet.
-pub use pallet_template;
+pub use pallet_a;
+
+/// Import the template pallet.
+pub use pallet_b;
 
 /// An index to a block.
 pub type BlockNumber = u32;
@@ -251,9 +254,15 @@ impl pallet_sudo::Config for Runtime {
 }
 
 /// Configure the pallet-template in pallets/template.
-impl pallet_template::Config for Runtime {
+impl pallet_a::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type WeightInfo = pallet_template::weights::SubstrateWeight<Runtime>;
+	type WeightInfo = pallet_a::weights::SubstrateWeight<Runtime>;
+}
+
+/// Configure the pallet-template in pallets/template.
+impl pallet_b::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = pallet_b::weights::SubstrateWeight<Runtime>;
 }
 
 // Create the runtime by composing the FRAME pallets that were previously configured.
@@ -296,7 +305,10 @@ mod runtime {
 
 	// Include the custom logic from the pallet-template in the runtime.
 	#[runtime::pallet_index(7)]
-	pub type TemplateModule = pallet_template;
+	pub type PalletA = pallet_a;
+
+    #[runtime::pallet_index(8)]
+	pub type PalletB = pallet_b;
 }
 
 /// The address format for describing accounts.
@@ -346,7 +358,8 @@ mod benches {
 		[pallet_balances, Balances]
 		[pallet_timestamp, Timestamp]
 		[pallet_sudo, Sudo]
-		[pallet_template, TemplateModule]
+		[pallet_a, PalletA]
+        [pallet_b, PalletB]
 	);
 }
 

@@ -1,4 +1,4 @@
-use crate as pallet_template;
+use crate as pallet_b;
 use frame_support::derive_impl;
 use sp_runtime::BuildStorage;
 
@@ -9,7 +9,8 @@ frame_support::construct_runtime!(
 	pub enum Test
 	{
 		System: frame_system,
-		TemplateModule: pallet_template,
+        PalletA: pallet_a,
+		PalletB: pallet_b,
 	}
 );
 
@@ -18,10 +19,16 @@ impl frame_system::Config for Test {
 	type Block = Block;
 }
 
-impl pallet_template::Config for Test {
+impl pallet_a::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 }
+
+impl pallet_b::Config for Test {
+	type RuntimeEvent = RuntimeEvent;
+	type WeightInfo = ();
+}
+
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> sp_io::TestExternalities {
